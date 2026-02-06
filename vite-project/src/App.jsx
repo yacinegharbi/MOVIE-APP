@@ -8,6 +8,7 @@ function App() {
 
   return (
     <>
+      <div className="grain-overlay"></div>
       <MovieProvider>
         <Navbar />
         <div>

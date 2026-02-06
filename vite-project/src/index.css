@@ -1,19 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-    /* Crimson Cyber-Noir Palette */
-    --neon-red: #ff0033;
-    --deep-red: #80001a;
-    --pitch-black: #000000;
-    --cyber-gray: #0a0a0c;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --glass-red: rgba(255, 0, 51, 0.05);
+    /* Zenith Cinematic Palette - Obsidian & Supernova */
+    --obsidian: #010204;
+    --supernova: #ef4444;
+    --ultraviolet: #7c3aed;
+    --nebula-glow: rgba(124, 58, 237, 0.15);
 
-    /* Dynamics */
-    --elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-    --smooth: cubic-bezier(0.19, 1, 0.22, 1);
-    --transition: all 0.5s var(--smooth);
+    /* Zenith Physics - Liquid Silk */
+    --ease-zenith: cubic-bezier(0.85, 0, 0.15, 1);
+    --transition-zenith: all 0.9s var(--ease-zenith);
+    --hover-lift: translateY(-30px) scale(1.06);
+
+    /* Physical Glass Properties */
+    --glass-surface: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-blur: blur(40px);
 }
 
 * {
@@ -21,348 +23,432 @@
     padding: 0;
     box-sizing: border-box;
     cursor: crosshair;
-    /* Technical feel */
+    /* Technical/Physical feel */
 }
 
 ::selection {
-    background: var(--neon-red);
-    color: var(--pitch-black);
+    background: var(--supernova);
+    color: white;
 }
 
 body {
     font-family: 'Outfit', sans-serif;
-    background-color: var(--pitch-black);
-    color: var(--text-primary);
+    background-color: var(--obsidian);
+    color: white;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     position: relative;
+    min-height: 100vh;
 }
 
-/* Scanline Texture Overlay */
+/* Volumetric Nebula Background - Animated Light Clouds */
+body::before,
 body::after {
-    content: "";
+    content: '';
+    position: fixed;
+    inset: -100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+body::before {
+    background:
+        radial-gradient(circle at 20% 30%, var(--ultraviolet) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, var(--supernova) 0%, transparent 40%);
+    filter: blur(120px);
+    animation: nebulaDrift 30s infinite alternate ease-in-out;
+}
+
+body::after {
+    background:
+        radial-gradient(circle at 70% 30%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 30% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+    filter: blur(100px);
+    animation: nebulaDrift 45s infinite alternate-reverse ease-in-out;
+}
+
+/* Subtle Film Grain Micro-Texture */
+.grain-overlay {
     position: fixed;
     inset: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
-            rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg,
-            rgba(255, 0, 0, 0.02),
-            rgba(0, 255, 0, 0.01),
-            rgba(0, 0, 255, 0.02));
-    background-size: 100% 4px, 3px 100%;
-    pointer-events: none;
     z-index: 9999;
-    opacity: 0.3;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3");
 }
 
-/* Cyber Navbar */
+@keyframes nebulaDrift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(1.2) rotate(5deg);
+    }
+}
+
+/* Kinetic Navbar */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 10%;
-    background: rgba(0, 0, 0, 0.95);
-    border-bottom: 2px solid var(--neon-red);
+    padding: 2rem 15%;
+    background: var(--glass-surface);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 0 30px rgba(255, 0, 51, 0.2);
 }
 
 .nav-bar a {
-    font-family: 'Space Mono', monospace;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--neon-red);
+    font-size: 2rem;
+    font-weight: 100;
+    letter-spacing: 0.2em;
+    color: white;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: -2px;
-    animation: glitch 3s infinite;
+    transition: var(--transition-zenith);
+    position: relative;
 }
 
-@keyframes glitch {
-    0% {
-        transform: skew(0deg);
-    }
+.nav-bar a span {
+    font-weight: 900;
+    color: var(--supernova);
+    text-shadow: 0 0 30px var(--supernova);
+}
 
-    20% {
-        transform: skew(-20deg);
-        text-shadow: 2px 0 var(--text-primary);
-    }
-
-    21% {
-        transform: skew(0deg);
-        text-shadow: none;
-    }
-
-    50% {
-        transform: skew(0deg);
-    }
-
-    52% {
-        transform: skew(20deg);
-        text-shadow: -2px 0 var(--neon-red);
-    }
-
-    54% {
-        transform: skew(0deg);
-        text-shadow: none;
-    }
+.nav-bar a:hover {
+    letter-spacing: 0.4em;
+    text-shadow:
+        1px 0 0 rgba(255, 0, 0, 0.5),
+        -1px 0 0 rgba(0, 255, 255, 0.5);
+    /* Chromatic Aberration Lite */
 }
 
 .nav-links {
     display: flex;
-    gap: 4rem;
+    gap: 6rem;
 }
 
 .nav-links a {
-    font-family: 'Space Mono', monospace;
-    color: var(--text-primary);
+    color: rgba(255, 255, 255, 0.4);
     text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 200;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    transition: var(--transition);
-    opacity: 0.6;
+    transition: var(--transition-zenith);
 }
 
 .nav-links a:hover {
-    opacity: 1;
-    color: var(--neon-red);
-    transform: scale(1.1) rotate(-2deg);
+    color: white;
+    transform: translateY(-5px);
+    text-shadow: 0 0 20px white;
 }
 
-/* Container Spacing */
+/* Zenith Layout */
 main {
     max-width: 1600px;
-    margin: 5rem auto;
-    padding: 0 4rem;
+    margin: 8rem auto;
+    padding: 0 6rem;
 }
 
-/* Data-Entry Search Bar */
+/* Kinetic Search Portal */
 .search-form {
     display: flex;
-    background: var(--cyber-gray);
-    padding: 2px;
-    border: 1px solid rgba(255, 0, 51, 0.3);
-    max-width: 900px;
-    margin: 0 auto 8rem;
+    background: rgba(255, 255, 255, 0.01);
+    padding: 0.5rem;
+    border: 1px solid var(--glass-border);
+    max-width: 1000px;
+    margin: 0 auto 12rem;
     position: relative;
-    transition: var(--transition);
-}
-
-.search-form::before {
-    content: "SYS_SEARCH_v4.0";
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--neon-red);
+    transition: var(--transition-zenith);
 }
 
 .search-form:focus-within {
-    border-color: var(--neon-red);
-    box-shadow: 0 0 40px rgba(255, 0, 51, 0.3);
-    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), 0 0 40px var(--nebula-glow);
+    transform: perspective(1000px) rotateX(5deg) translateY(-10px);
 }
 
 .search-input {
     flex: 1;
     background: transparent;
     border: none;
-    color: var(--text-primary);
-    padding: 1.5rem 2rem;
-    font-size: 1.2rem;
+    color: white;
+    padding: 1.5rem 3rem;
+    font-size: 1.4rem;
     outline: none;
-    font-family: 'Space Mono', monospace;
+    font-weight: 100;
+    letter-spacing: 0.1em;
 }
 
 .search-btn {
-    background: var(--neon-red);
-    color: var(--pitch-black);
+    background: white;
+    color: black;
     border: none;
-    padding: 0 3rem;
+    padding: 0 5rem;
     font-weight: 900;
-    font-family: 'Space Mono', monospace;
     text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--transition-zenith);
 }
 
 .search-btn:hover {
-    background: var(--text-primary);
+    background: var(--supernova);
+    color: white;
     letter-spacing: 0.5em;
 }
 
-/* Matrix Movie Grid */
+/* Infinite Movie Grid */
 .movies-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 5rem;
+    padding-bottom: 15rem;
 }
 
-/* Cyber Record Card */
+/* Compact Favorite Grid - Smaller Cards */
+.favorite-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2.5rem;
+    padding-bottom: 15rem;
+}
+
+.favorite-grid .movie-info h2 {
+    font-size: 1.1rem;
+    /* Smaller titles for smaller cards */
+}
+
+.favorite-grid .favorite-btn {
+    width: 40px;
+    height: 40px;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.1rem;
+}
+
+/* Zenith Holographic Card */
 .movie-card {
     position: relative;
-    background: var(--cyber-gray);
-    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.01);
+    transition: var(--transition-zenith);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    perspective: 1000px;
 }
 
 .movie-card:hover {
-    transform: scale(1.05) rotate(1deg);
-    border-color: var(--neon-red);
-    box-shadow: -20px 20px 60px rgba(255, 0, 51, 0.1);
-    z-index: 10;
+    transform: var(--hover-lift);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 60px 120px -30px rgba(0, 0, 0, 1), 0 0 40px var(--nebula-glow);
+    z-index: 100;
 }
 
 .movie-poster {
     width: 100%;
     aspect-ratio: 2/3;
     overflow: hidden;
-    filter: grayscale(1) contrast(1.2);
-    transition: var(--transition);
+    position: relative;
+    filter: brightness(0.6) contrast(1.1);
+    transition: var(--transition-zenith);
 }
 
 .movie-card:hover .movie-poster {
-    filter: grayscale(0) contrast(1);
+    filter: brightness(1.1) contrast(1);
 }
 
 .movie-poster img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1s var(--elastic);
+    transition: transform 2s var(--ease-zenith);
 }
 
 .movie-card:hover .movie-poster img {
-    transform: scale(1.1) rotate(-3deg);
+    transform: scale(1.15) rotateY(5deg);
+}
+
+/* Internal Resonance Light */
+.movie-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.movie-card:hover::after {
+    opacity: 1;
 }
 
 .movie-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 40%, var(--pitch-black) 100%);
+    background: linear-gradient(180deg, transparent 50%, rgba(1, 2, 4, 1) 100%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 2.5rem;
+    padding: 3rem;
     opacity: 0;
-    transition: var(--transition);
-    transform: skewX(-10deg) translateX(20px);
+    transition: var(--transition-zenith);
+    transform: translateY(20px);
 }
 
 .movie-card:hover .movie-overlay {
     opacity: 1;
-    transform: skewX(0) translateX(0);
+    transform: translateY(0);
 }
 
 .favorite-btn {
     position: absolute;
-    top: 0;
-    left: 0;
-    background: var(--neon-red);
-    color: var(--pitch-black);
-    width: 60px;
-    height: 60px;
-    border: none;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
     font-size: 1.5rem;
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-    padding: 0 15px 15px 0;
-    transition: var(--transition);
+    cursor: pointer;
+    transition: var(--transition-zenith);
+    backdrop-filter: blur(10px);
 }
 
 .favorite-btn:hover {
-    transform: scale(1.5);
-    background: var(--text-primary);
+    background: white;
+    color: var(--supernova);
+    transform: rotate(360deg) scale(1.2);
+}
+
+.favorite-btn.favorite {
+    background: var(--supernova);
+    color: white;
+    box-shadow: 0 0 30px var(--supernova);
 }
 
 .movie-info {
-    padding: 2.5rem;
-    background: var(--cyber-gray);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    background: rgba(1, 2, 4, 0.8);
 }
 
 .movie-info h2 {
-    font-size: 1.6rem;
-    font-weight: 900;
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: white;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
     margin-bottom: 0.5rem;
-    letter-spacing: -1px;
 }
 
 .movie-info p {
-    font-family: 'Space Mono', monospace;
     font-size: 0.75rem;
-    color: var(--neon-red);
-    text-transform: uppercase;
-    opacity: 0.8;
+    color: var(--supernova);
+    font-weight: 600;
+    letter-spacing: 0.3em;
 }
 
-/* Tech Favorites Page */
-.favorite-movies {
-    padding: 10rem 2rem;
-}
-
+/* Zenith Empty State */
 .favorite-movies h2 {
-    font-family: 'Space Mono', monospace;
     font-size: 6rem;
-    font-weight: 700;
-    color: var(--text-primary);
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    letter-spacing: -0.05em;
+    margin-bottom: 8rem;
     text-transform: uppercase;
-    letter-spacing: -0.1em;
-    margin-bottom: 1rem;
+    background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.favorite-movies h2::selection {
-    background: #fff;
-    color: #f00;
+/* Kinetic Shimmer - Beyond Belief */
+.loading-shimmer-card {
+    background: rgba(255, 255, 255, 0.01);
+    aspect-ratio: 2/3;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Staggered Entrance */
+.loading-shimmer-card::after {
+    content: "";
+    position: absolute;
+    inset: -150%;
+    background: conic-gradient(from 0deg at 50% 50%,
+            transparent 0deg,
+            rgba(255, 255, 255, 0.05) 180deg,
+            transparent 360deg);
+    animation: zenithPulse 4s linear infinite;
+}
+
+@keyframes zenithPulse {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Staggered Entrance - Liquid Silk Physics */
 .movie-card {
-    animation: techEntrance 0.8s var(--elastic) backwards;
+    animation: zenithIn 1.5s var(--ease-zenith) backwards;
+    animation-delay: calc(var(--i, 0) * 0.15s);
 }
 
-@keyframes techEntrance {
+@keyframes zenithIn {
     from {
         opacity: 0;
-        transform: translateY(100px) skewY(5deg);
+        transform: translateY(150px) scale(0.95) rotateX(15deg);
+        filter: brightness(0) blur(30px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) skewY(0);
+        transform: translateY(0) scale(1) rotateX(0);
+        filter: brightness(1) blur(0);
     }
 }
 
-.movie-card:nth-child(n) {
-    animation-delay: calc(var(--i, 0) * 0.1s);
-}
-
-/* Responsive Grid */
-@media (max-width: 1024px) {
-    nav {
-        padding: 1.5rem 5%;
-    }
-
+/* Responsive Master */
+@media (max-width: 1300px) {
     .movies-grid {
         gap: 3rem;
     }
 
-    .favorite-movies h2 {
-        font-size: 4rem;
+    main {
+        padding: 0 3rem;
     }
 }
 
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
+@media (max-width: 1000px) {
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    main {
-        padding: 0 1.5rem;
+    nav {
+        padding: 2rem 5%;
+    }
+}
+
+@media (max-width: 600px) {
+    .movies-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .favorite-movies h2 {
+        font-size: 3rem;
     }
 }

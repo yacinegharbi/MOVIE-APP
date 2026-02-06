@@ -6,12 +6,15 @@ function Favorite() {
         <>
             <div className="favorite-movies">
                 <h2>Favorite Movies</h2>
-                <div className="favorite-movies-grid">
+                <div className="favorite-grid">
                     {favorites.length === 0 ? (
-                        <p>No favorite movies yet</p>
+                        <div className="empty-favorites">
+                            <p>Your cinematic archive is empty.</p>
+                            <span>Mark movies as favorites to see them here.</span>
+                        </div>
                     ) : (
-                        favorites.map((movie) => (
-                            <div key={movie.id}>
+                        favorites.map((movie, index) => (
+                            <div key={movie.id} style={{ "--i": index }}>
                                 <MovieCard movie={movie} />
                             </div>
                         ))

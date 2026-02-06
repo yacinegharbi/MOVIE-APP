@@ -63,11 +63,15 @@ function Movie() {
                 </form>
                 {erro && <div className="error">{erro}</div>}
                 {loading ? (
-                    <div className="loading">Loading... </div>
+                    <div className="movies-grid">
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                            <div key={n} className="loading-shimmer-card"></div>
+                        ))}
+                    </div>
                 ) : (
                     <div className="movies-grid">
-                        {Movies.map((movie) => (
-                            <div key={movie.id} >
+                        {Movies.map((movie, index) => (
+                            <div key={movie.id} style={{ "--i": index }}>
                                 <MovieCard movie={movie} />
                             </div>
                         ))}
